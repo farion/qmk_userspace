@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include QMK_KEYBOARD_H
+#include <stdbool.h>
 
 typedef enum module {
     none,

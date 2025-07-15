@@ -1,0 +1,5 @@
+//#define RGBLIGHT_LED_COUNT 6
+/*#define RGBLIGHT_LAYERS
+#define RGBLED_SPLIT {6,6}
+*/
+#define SPLIT_LAYER_STATE_ENABLE
