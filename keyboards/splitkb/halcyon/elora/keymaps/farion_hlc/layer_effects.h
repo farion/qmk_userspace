@@ -16,15 +16,15 @@ RGB_MATRIX_EFFECT(layer_6_effect)
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
 
 
-#define C_BK {0,0,0}
-#define C_BL {0,0,255}
-#define C_RD {255,0,0}
-#define C_YW {255,220,0}
-#define C_WT {255,255,255}
-#define C_GN {0,255,0}
-#define C_CY {0,255,255}
-#define C_MG {255,0,255}
-#define C_OR {255, 80, 0}
+#define C_BK {HSV_OFF}
+#define C_BL {HSV_BLUE}
+#define C_RD {HSV_RED}
+#define C_YW {HSV_YELLOW}
+#define C_WT {HSV_WHITE}
+#define C_GN {HSV_GREEN}
+#define C_CY {HSV_CYAN}
+#define C_MG {HSV_MAGENTA}
+#define C_OR {HSV_ORANGE}
 
 
 // Color LED adresses
@@ -151,10 +151,18 @@ static void rgb_set_color_layout(uint8_t layer) {
     }
 
     for (uint8_t col = 0; col < 37; col++) {
-        uint8_t r = pgm_read_byte(&colors[layer][side][col][0]);
-        uint8_t g = pgm_read_byte(&colors[layer][side][col][1]);
-        uint8_t b = pgm_read_byte(&colors[layer][side][col][2]);
-        rgb_matrix_set_color(col, r, g, b);
+        hsv_t base_hsv = {
+            .h = colors[layer][side][col][0],
+            .s = colors[layer][side][col][1],
+            .v = colors[layer][side][col][2]
+        };
+        hsv_t adjusted_hsv = {
+            .h = (base_hsv.h + rgb_matrix_config.hsv.h) % 255, // Blend or adjust hue
+            .s = (base_hsv.s * rgb_matrix_config.hsv.s) / 255, // Modulate saturation
+            .v = (base_hsv.v * rgb_matrix_config.hsv.v) / 255  // Modulate brightness/value
+        };
+        rgb_t rgb = hsv_to_rgb(adjusted_hsv);
+        rgb_matrix_set_color(col, rgb.r, rgb.g, rgb.b);
     }
 }
 
