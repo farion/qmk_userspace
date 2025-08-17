@@ -3,6 +3,7 @@
 
 #include "halcyon.h"
 #include "hlc_tft_display.h"
+#include "wpm.h"
 
 #include "hardware/structs/rosc.h"
 
@@ -22,10 +23,6 @@
 #include "graphics/numbers/8.qgf.h"
 #include "graphics/numbers/9.qgf.h"
 #include "graphics/numbers/undef.qgf.h"
-
-static const char *caps =        "Caps";
-static const char *num =         "Num";
-static const char *scroll =      "Scroll";
 
 static painter_font_handle_t Retron27;
 static painter_font_handle_t Retron27_underline;
@@ -185,24 +182,12 @@ void add_cell_cluster() {
 }
 
 void update_display(void) {
-    static bool first_run_led = false;
     static bool first_run_layer = false;
 
     if( first_run_layer == false) {
         // Load fonts
         Retron27 = qp_load_font_mem(font_Retron2000_27);
         Retron27_underline = qp_load_font_mem(font_Retron2000_underline_27);
-    }
-
-    if(last_led_usb_state.raw != host_keyboard_led_state().raw || first_run_led == false) {
-        led_t led_usb_state = host_keyboard_led_state();
-
-        led_usb_state.caps_lock   ? qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 3 - 15, Retron27_underline, caps,   HSV_CAPS_ON,   HSV_BLACK) : qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 3 - 15, Retron27, caps,   HSV_CAPS_OFF,   HSV_BLACK);
-        led_usb_state.num_lock    ? qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 2 - 10, Retron27_underline, num,    HSV_NUM_ON,    HSV_BLACK) : qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height * 2 - 10, Retron27, num,    HSV_NUM_OFF,    HSV_BLACK);
-        led_usb_state.scroll_lock ? qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height - 5,      Retron27_underline, scroll, HSV_SCROLL_ON, HSV_BLACK) : qp_drawtext_recolor(lcd_surface, 5, LCD_HEIGHT - Retron27->line_height - 5,      Retron27, scroll, HSV_SCROLL_OFF, HSV_BLACK);
-
-        last_led_usb_state = led_usb_state;
-        first_run_led = true;
     }
 
     if(last_layer_state != layer_state || first_run_layer == false) {
@@ -255,6 +240,12 @@ void update_display(void) {
         last_layer_state = layer_state;
         first_run_layer = true;
     }
+
+    int wpm_y = LCD_HEIGHT - Retron27->line_height - 5;
+    qp_rect(lcd_surface, 0, wpm_y, LCD_WIDTH - 1, wpm_y + Retron27->line_height, HSV_BLACK, true);
+    char wpm_str[12];
+    snprintf(wpm_str, sizeof(wpm_str), "WPM: %3d", get_current_wpm());
+    qp_drawtext_recolor(lcd_surface, 5, wpm_y, Retron27, wpm_str, HSV_LAYER_0, HSV_BLACK);
 }
 
 // Called from halcyon.c
