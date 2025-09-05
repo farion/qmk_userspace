@@ -26,7 +26,6 @@
 
 static painter_font_handle_t Retron27;
 static painter_font_handle_t Retron27_underline;
-static painter_image_handle_t layer_number;
 
 static uint8_t lcd_surface_fb[SURFACE_REQUIRED_BUFFER_BYTE_SIZE(135, 240, 16)];
 
@@ -166,6 +165,24 @@ void update_grid() {
     }
 }
 
+void draw_layer_text(uint8_t layer) {
+    const char *layer_text = "Default";
+    uint8_t hue = 0;
+    switch (layer) {
+        case 0: layer_text = "Default"; hue = 0; break;
+        case 1: layer_text = "Nav";     hue = 43; break;
+        case 2: layer_text = "Special"; hue = 32; break;
+        case 3: layer_text = "Fn";      hue = 172; break;
+        case 4: layer_text = "Symbols"; hue = 135; break;
+        case 5: layer_text = "Sway";    hue = 75; break;
+        case 6: layer_text = "Game";    hue = 75; break;
+        default: layer_text = "Unknown"; hue = 0;
+    }
+    // Clear the top area for the text
+    qp_rect(lcd_surface, 0, 0, LCD_WIDTH - 1, Retron27->line_height + 10, HSV_BLACK, true);
+    qp_drawtext_recolor(lcd_surface, 5, 5, Retron27, layer_text, hue, 255, 255, HSV_BLACK);
+}
+
 // Function to add a cluster of cells at a random position
 void add_cell_cluster() {
     int cluster_size = 3;  // Size of the cluster (3x3)
@@ -191,60 +208,58 @@ void update_display(void) {
     }
 
     if(last_layer_state != layer_state || first_run_layer == false) {
-        switch (get_highest_layer(layer_state|default_layer_state)) {
-        case 0:
-            layer_number = qp_load_image_mem(gfx_0);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_0, HSV_BLACK);
-            break;
-        case 1:
-            layer_number = qp_load_image_mem(gfx_1);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_1, HSV_BLACK);
-            break;
-        case 2:
-            layer_number = qp_load_image_mem(gfx_2);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_2, HSV_BLACK);
-            break;
-        case 3:
-            layer_number = qp_load_image_mem(gfx_3);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_3, HSV_BLACK);
-            break;
-        case 4:
-            layer_number = qp_load_image_mem(gfx_4);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_4, HSV_BLACK);
-            break;
-        case 5:
-            layer_number = qp_load_image_mem(gfx_5);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_5, HSV_BLACK);
-            break;
-        case 6:
-            layer_number = qp_load_image_mem(gfx_6);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_6, HSV_BLACK);
-            break;
-        case 7:
-            layer_number = qp_load_image_mem(gfx_7);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_7, HSV_BLACK);
-            break;
-        case 8:
-            layer_number = qp_load_image_mem(gfx_8);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_8, HSV_BLACK);
-            break;
-        case 9:
-            layer_number = qp_load_image_mem(gfx_9);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_9, HSV_BLACK);
-            break;
-        default:
-            layer_number = qp_load_image_mem(gfx_undef);
-            qp_drawimage_recolor(lcd_surface, 5, 5, layer_number, HSV_LAYER_UNDEF, HSV_BLACK);
-        }
-        qp_close_image(layer_number);
+        draw_layer_text(get_highest_layer(layer_state|default_layer_state));
         last_layer_state = layer_state;
         first_run_layer = true;
     }
 
+    // CAPS WORD
+    int ind_y = Retron27->line_height + 10;
+    qp_rect(lcd_surface, 0, ind_y, LCD_WIDTH - 1, ind_y + Retron27->line_height, HSV_BLACK, true);
+    if(is_caps_word_on()) {
+        qp_drawtext_recolor(lcd_surface, 5, ind_y, Retron27, "CAP" , HSV_BLUE, HSV_BLACK);
+    }
+
+    // S C A G
+    int scag_y = ind_y + Retron27->line_height + 5;
+    qp_rect(lcd_surface, 0, scag_y, LCD_WIDTH - 1, scag_y + Retron27->line_height, HSV_BLACK, true);
+
+    uint8_t mods = get_mods();
+    struct {
+        char c;
+        bool active;
+    } scag[4] = {
+        {'S', mods & MOD_MASK_SHIFT},
+        {'C', mods & MOD_MASK_CTRL},
+        {'A', mods & MOD_MASK_ALT},
+        {'G', mods & MOD_MASK_GUI}
+    };
+
+    int x = 5;
+    for (int i = 0; i < 4; i++) {
+        char str[2] = {scag[i].c, '\0'};
+        uint8_t h = scag[i].active ? 170 : 0;
+        uint8_t s = scag[i].active ? 255 : 0;
+        uint8_t v = scag[i].active ? 255 : 180;
+        qp_drawtext_recolor(lcd_surface, x, scag_y, Retron27, str, h, s, v, HSV_BLACK);
+        x += 30;
+    }
+
+    // WPM
+    static uint32_t last_wpm_update = 0;
+    static uint8_t cached_wpm = 0;
     int wpm_y = LCD_HEIGHT - Retron27->line_height - 5;
+    if (timer_elapsed32(last_wpm_update) >= 1000) {
+        cached_wpm = get_current_wpm();
+        if (cached_wpm == 1) {
+            cached_wpm = 0;
+        }
+        last_wpm_update = timer_read32();
+    }
+
     qp_rect(lcd_surface, 0, wpm_y, LCD_WIDTH - 1, wpm_y + Retron27->line_height, HSV_BLACK, true);
     char wpm_str[12];
-    snprintf(wpm_str, sizeof(wpm_str), "WPM: %3d", get_current_wpm());
+    snprintf(wpm_str, sizeof(wpm_str), "WPM: %3d", cached_wpm);
     qp_drawtext_recolor(lcd_surface, 5, wpm_y, Retron27, wpm_str, HSV_LAYER_0, HSV_BLACK);
 }
 

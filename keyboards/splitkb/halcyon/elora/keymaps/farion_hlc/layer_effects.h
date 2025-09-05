@@ -84,7 +84,7 @@ const uint8_t PROGMEM colors[][2][37][3] = {
 
     // umlauts
     [2] = LAYOUT_elora_color(
-        C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_BK, C_CY,
+        C_BK, C_CY, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_BK, C_CY,
         C_BK, C_CY, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_OR, C_CY, C_OR, C_BK, C_CY,
         C_BK, C_OR, C_OR, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_CY, C_BK,
         C_BK, C_BK, C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,      C_BK, C_BK, C_BK, C_CY, C_BK, C_BK, C_CY, C_CY,

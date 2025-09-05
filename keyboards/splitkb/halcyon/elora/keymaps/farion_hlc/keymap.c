@@ -173,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [2] = LAYOUT_elora_hlc(
-     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_PLUS,
+     KC_NO  , KC_GRV  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_PLUS,
      KC_NO  , KC_AT  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , US_UDIA, KC_PIPE, US_ODIA, KC_NO  , KC_DEL,
      KC_NO  , US_ADIA, US_SS  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_TILD, KC_NO,
      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , KC_NO  , RALT(KC_M),KC_NO, KC_NO  , KC_BSLS, KC_EQL,
@@ -246,7 +246,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_2_effect);
             break;
         case 3:
-            rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_3_effect);
+            rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_3_effect)
             break;
         case 4:
             rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_4_effect);
