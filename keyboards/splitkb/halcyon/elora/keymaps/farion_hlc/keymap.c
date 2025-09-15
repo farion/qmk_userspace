@@ -46,6 +46,8 @@ enum layers {
 #define HR_J LT(2, KC_J)
 #define HR_K RALT_T(KC_K)
 #define HR_L RCTL_T(KC_L)
+#define HR_SPACE LT(2, KC_SPC)
+#define HR_ENTER LT(2, KC_ENTER)
 #define HR_SCLN RSFT_T(KC_SCLN)
 
 #define L5_LGUI LM(5, MOD_LGUI)
@@ -159,25 +161,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB , KC_Q   , KC_W   , KC_E   , KC_R   , KC_T   ,                   /**/                   KC_Y   , KC_U   , KC_I   , KC_O   , KC_P   , KC_BSPC,
      KC_LSFT, HR_A   , HR_S   , HR_D   , HR_F   , KC_G   ,                   /**/                   KC_H   , HR_J   , HR_K   , HR_L   , HR_SCLN, KC_RSFT,
      KC_LCTL, KC_Z   , KC_X   , KC_C   , KC_V   , KC_B   , KC_LBRC, CG_RAIN ,/**/ RM_TOGG, KC_RBRC, KC_N   , KC_M   , KC_COMM, KC_DOT , KC_SLSH, KC_QUOTE,
-                                L5_LGUI, MO(4)  ,TD(TD_3), KC_SPACE,TD(TD_1),/**/ TD(TD_1),KC_ENTER,TD(TD_3),MO(4)  , L5_RGUI  ,
+                                L5_LGUI, MO(4)  ,TD(TD_2), HR_SPACE,TD(TD_1),/**/ TD(TD_1),HR_ENTER,TD(TD_2),MO(4)  , L5_RGUI  ,
      KC_MUTE, KC_NO,  KC_NO, KC_NO, KC_NO,                                                                KC_MUTE, KC_NO, KC_NO, KC_NO, KC_NO
     ),
 
     [1] = LAYOUT_elora_hlc(
-     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   TG(6)  , KC_NO  , KC_NO  , KC_NO  , TG(0)  , KC_NO,
-     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_PGUP, KC_HOME, KC_UP  , KC_END , KC_VOLU, KC_DEL,
-     KC_LSFT, KC_NO  , KC_NO  , MS_BTN1, MS_BTN2, MS_WHLU,                   /**/                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_INS,
-     KC_LCTL, KC_NO  , KC_NO  , KC_NO  , MS_BTN3, MS_WHLD, KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , KC_PAUSE,KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
+     _______  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   TG(6)  , KC_NO  , KC_NO  , KC_NO  , TG(0)  , KC_NO,
+     _______  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_PGUP, KC_HOME, KC_UP  , KC_END , KC_VOLU, KC_DEL,
+     _______, KC_NO  , KC_NO  , MS_BTN1, MS_BTN2, MS_WHLU,                   /**/                   KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_INS,
+     _______, KC_NO  , KC_NO  , KC_NO  , MS_BTN3, MS_WHLD, KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , KC_PAUSE,KC_MPRV, KC_MPLY, KC_MNXT, KC_MUTE, KC_PSCR,
                                 KC_NO  , KC_NO  , KC_NO  , KC_NO  , _______  , /**/_______ , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                                                            KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO
     ),
 
     [2] = LAYOUT_elora_hlc(
-     KC_NO  , KC_GRV  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_PLUS,
-     KC_NO  , KC_AT  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , US_UDIA, KC_PIPE, US_ODIA, KC_NO  , KC_DEL,
-     KC_NO  , US_ADIA, US_SS  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_TILD, KC_NO,
-     KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , KC_NO  , RALT(KC_M),KC_NO, KC_NO  , KC_BSLS, KC_EQL,
-                                KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,
+     _______  , KC_GRV  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_PLUS,
+     _______  , KC_AT  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , US_UDIA, KC_PIPE, US_ODIA, KC_NO  , KC_DEL,
+     _______  , US_ADIA, US_SS  , KC_NO  , KC_NO  , KC_NO  ,                   /**/                   KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_TILD, _______,
+     _______  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , KC_NO  , RALT(KC_M),KC_NO, KC_NO  , KC_BSLS, KC_EQL,
+                                KC_NO  , KC_NO  , _______  , KC_NO  , KC_NO  , /**/ KC_NO  , KC_NO  , _______  , KC_NO  , KC_NO  ,
      KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO  ,                                                            KC_NO  , KC_NO  , KC_NO  , KC_NO  , KC_NO
     ),
 
@@ -246,7 +248,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_2_effect);
             break;
         case 3:
-            rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_3_effect)
+            rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_3_effect);
             break;
         case 4:
             rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_4_effect);
@@ -269,4 +271,28 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 void keyboard_post_init_user(void) {
     rgb_matrix_mode(RGB_MATRIX_CUSTOM_layer_0_effect);
+}
+
+
+enum combo_events {
+    VISAVE
+};
+
+const uint16_t PROGMEM combo1[] = {KC_ESC, KC_1, COMBO_END};
+combo_t key_combos[] = {
+    [VISAVE] = COMBO_ACTION(combo1),
+};
+
+void process_combo_event(uint16_t combo_index, bool pressed) {
+  switch(combo_index) {
+    case VISAVE:
+      if (pressed) {
+        tap_code16(KC_ESC);
+        tap_code16(KC_COLN);
+        tap_code16(KC_W);
+        wait_ms(200);
+        tap_code16(KC_ENTER);
+      }
+      break;
+  }
 }

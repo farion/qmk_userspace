@@ -6,6 +6,7 @@ enum custom_tapdances {
     TD_O,
     TD_S,*/
     TD_1,
+    TD_2,
     TD_3,
     TD_BL
 };

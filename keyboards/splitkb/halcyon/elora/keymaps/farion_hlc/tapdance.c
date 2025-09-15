@@ -175,6 +175,16 @@ void layer_reset_1(tap_dance_state_t *state, void *user_data) {
     }
 }
 
+void layer_tap_2(tap_dance_state_t *state, void *user_data) {
+    layer_on(2);
+}
+
+void layer_reset_2(tap_dance_state_t *state, void *user_data) {
+    if (state->count != 2) {
+        layer_off(2);
+    }
+}
+
 void layer_tap_3(tap_dance_state_t *state, void *user_data) {
     layer_on(3);
 }
@@ -199,6 +209,7 @@ tap_dance_action_t my_tap_dance_actions[TAP_DANCE_ACTIONS_COUNT] = {
     [TD_O] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, o_finished, o_reset),
     [TD_S] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, s_finished, s_reset),*/
     [TD_1] = ACTION_TAP_DANCE_FN_ADVANCED(layer_tap_1, NULL, layer_reset_1),
+    [TD_2] = ACTION_TAP_DANCE_FN_ADVANCED(layer_tap_2, NULL, layer_reset_2),
     [TD_3] = ACTION_TAP_DANCE_FN_ADVANCED(layer_tap_3, NULL, layer_reset_3),
     [TD_BL] = ACTION_TAP_DANCE_FN(td_esc),
 };

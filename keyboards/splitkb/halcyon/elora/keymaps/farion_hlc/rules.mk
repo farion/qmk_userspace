@@ -10,6 +10,7 @@ WPM_ENABLE = yes
 RAW_ENABLE = yes
 LAYER_LOCK_ENABLE = yes
 RGB_MATRIX_CUSTOM_USER = yes
+COMBO_ENABLE = yes
 
 # This adds module functionality to your keyboard (files found in users/halcyon_modules)
 USER_NAME := halcyon_modules

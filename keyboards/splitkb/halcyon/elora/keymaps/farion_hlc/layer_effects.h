@@ -67,7 +67,7 @@ const uint8_t PROGMEM colors[][2][37][3] = {
         C_BL, C_RD, C_RD, C_RD, C_RD, C_RD,                              C_RD, C_RD, C_RD, C_RD, C_RD, C_BL,
         C_BL, C_RD, C_RD, C_RD, C_OR, C_RD,                              C_RD, C_OR, C_RD, C_RD, C_RD, C_BL,
         C_BL, C_RD, C_RD, C_RD, C_RD, C_RD, C_CY, C_GN,      C_GN, C_CY, C_RD, C_RD, C_RD, C_RD, C_RD, C_RD,
-                          C_GN, C_CY, C_BL, C_MG, C_YW,      C_YW, C_MG, C_BL, C_CY, C_GN,
+                          C_GN, C_CY, C_OR, C_MG, C_YW,      C_YW, C_MG, C_OR, C_CY, C_GN,
         C_RD, C_RD, C_RD, C_RD, C_RD, C_RD,                              C_RD, C_RD, C_RD, C_RD, C_RD, C_RD
     ),
 
@@ -88,7 +88,7 @@ const uint8_t PROGMEM colors[][2][37][3] = {
         C_BK, C_CY, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_OR, C_CY, C_OR, C_BK, C_CY,
         C_BK, C_OR, C_OR, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_CY, C_BK,
         C_BK, C_BK, C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,      C_BK, C_BK, C_BK, C_CY, C_BK, C_BK, C_CY, C_CY,
-                          C_BK, C_BK, C_BK, C_BK, C_BK,      C_BK, C_BK, C_BK, C_BK, C_BK,
+                          C_BK, C_BK, C_OR, C_BK, C_BK,      C_BK, C_BK, C_OR, C_BK, C_BK,
         C_OR, C_OR, C_OR, C_OR, C_OR, C_OR,                              C_OR, C_OR, C_OR, C_OR, C_OR, C_OR
     ),
 
