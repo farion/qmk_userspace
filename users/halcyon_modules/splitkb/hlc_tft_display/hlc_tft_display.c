@@ -170,12 +170,13 @@ void draw_layer_text(uint8_t layer) {
     uint8_t hue = 0;
     switch (layer) {
         case 0: layer_text = "Default"; hue = 0; break;
-        case 1: layer_text = "Nav";     hue = 43; break;
-        case 2: layer_text = "Special"; hue = 32; break;
-        case 3: layer_text = "Fn";      hue = 172; break;
-        case 4: layer_text = "Symbols"; hue = 135; break;
-        case 5: layer_text = "Sway";    hue = 75; break;
-        case 6: layer_text = "Game";    hue = 75; break;
+        case 1: layer_text = "Win/Mac"; hue = 0; break;
+        case 2: layer_text = "Game";    hue = 172; break;
+        case 3: layer_text = "Nav";     hue = 43; break;
+        case 4: layer_text = "Special"; hue = 32; break;
+        case 5: layer_text = "Fn";      hue = 135; break;
+        case 6: layer_text = "Symbols"; hue = 135; break;
+        case 7: layer_text = "Sway";    hue = 75; break;
         default: layer_text = "Unknown"; hue = 0;
     }
     // Clear the top area for the text

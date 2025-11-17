@@ -11,10 +11,11 @@ RGB_MATRIX_EFFECT(layer_3_effect)
 RGB_MATRIX_EFFECT(layer_4_effect)
 RGB_MATRIX_EFFECT(layer_5_effect)
 RGB_MATRIX_EFFECT(layer_6_effect)
+RGB_MATRIX_EFFECT(layer_7_effect)
 // Step 2.
 // Define effects inside the `RGB_MATRIX_CUSTOM_EFFECT_IMPLS` ifdef block
 #ifdef RGB_MATRIX_CUSTOM_EFFECT_IMPLS
-
+#include "defer.h"
 
 #define C_BK {HSV_OFF}
 #define C_BL {HSV_BLUE}
@@ -67,13 +68,33 @@ const uint8_t PROGMEM colors[][2][37][3] = {
         C_BL, C_RD, C_RD, C_RD, C_RD, C_RD,                              C_RD, C_RD, C_RD, C_RD, C_RD, C_BL,
         C_BL, C_RD, C_RD, C_RD, C_OR, C_RD,                              C_RD, C_OR, C_RD, C_RD, C_RD, C_BL,
         C_BL, C_RD, C_RD, C_RD, C_RD, C_RD, C_CY, C_GN,      C_GN, C_CY, C_RD, C_RD, C_RD, C_RD, C_RD, C_RD,
-                          C_GN, C_CY, C_OR, C_MG, C_YW,      C_YW, C_MG, C_OR, C_CY, C_GN,
+                          C_CY, C_GN, C_BL, C_MG, C_YW,      C_YW, C_MG, C_BL, C_GN, C_CY,
         C_RD, C_RD, C_RD, C_RD, C_RD, C_RD,                              C_RD, C_RD, C_RD, C_RD, C_RD, C_RD
     ),
 
-    // navigation + media
+    // win
     [1] = LAYOUT_elora_color(
-        C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,                              C_BL, C_BK, C_BK, C_BK, C_BK, C_BK,
+        C_BL, C_WT, C_WT, C_WT, C_WT, C_WT,                              C_WT, C_WT, C_WT, C_WT, C_WT, C_RD,
+        C_BL, C_RD, C_RD, C_RD, C_RD, C_RD,                              C_RD, C_RD, C_RD, C_RD, C_RD, C_BL,
+        C_BL, C_RD, C_RD, C_RD, C_OR, C_RD,                              C_RD, C_OR, C_RD, C_RD, C_RD, C_BL,
+        C_BL, C_RD, C_RD, C_RD, C_RD, C_RD, C_CY, C_GN,      C_GN, C_CY, C_RD, C_RD, C_RD, C_RD, C_RD, C_RD,
+                          C_CY, C_RD, C_BL, C_MG, C_YW,      C_YW, C_MG, C_BL, C_RD, C_CY,
+        C_RD, C_RD, C_RD, C_RD, C_RD, C_RD,                              C_RD, C_RD, C_RD, C_RD, C_RD, C_RD
+    ),
+
+    // game
+    [2] = LAYOUT_elora_color(
+        C_BL, C_WT, C_WT, C_WT, C_WT, C_WT,                              C_WT, C_WT, C_WT, C_WT, C_WT, C_BK,
+        C_YW, C_MG, C_OR, C_YW, C_OR, C_MG,                              C_CY, C_CY, C_CY, C_CY, C_CY, C_BK,
+        C_BL, C_BL, C_YW, C_YW, C_YW, C_OR,                              C_CY, C_CY, C_CY, C_CY, C_BK, C_BK,
+        C_BL, C_CY, C_CY, C_CY, C_CY, C_CY, C_BK, C_MG,      C_BK, C_BK, C_CY, C_CY, C_BK, C_BK, C_BK, C_BK,
+                          C_BK, C_RD, C_GN, C_WT, C_BL,      C_YW, C_BK, C_BK, C_BK, C_BK,
+        C_BL, C_BL, C_BL, C_BL, C_BL, C_BL,                              C_BL, C_BL, C_BL, C_BL, C_BL, C_BL
+    ),
+
+    // navigation + media
+    [3] = LAYOUT_elora_color(
+        C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,                              C_RD, C_BL, C_BK, C_BK, C_GN, C_BK,
         C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,                              C_CY, C_CY, C_YW, C_CY, C_BL, C_CY,
         C_BL, C_BK, C_BK, C_GN, C_RD, C_BL,                              C_CY, C_YW, C_YW, C_YW, C_BL, C_CY,
         C_BL, C_BK, C_BK, C_BK, C_OR, C_BL, C_BK, C_BK,      C_BK, C_BK, C_BL, C_BL, C_GN, C_BL, C_RD, C_MG,
@@ -83,9 +104,9 @@ const uint8_t PROGMEM colors[][2][37][3] = {
 
 
     // umlauts
-    [2] = LAYOUT_elora_color(
+    [4] = LAYOUT_elora_color(
         C_BK, C_CY, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_BK, C_CY,
-        C_BK, C_CY, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_OR, C_CY, C_OR, C_BK, C_CY,
+        C_BK, C_CY, C_BK, C_CY, C_BK, C_BK,                              C_BK, C_OR, C_CY, C_OR, C_BK, C_CY,
         C_BK, C_OR, C_OR, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_CY, C_BK,
         C_BK, C_BK, C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,      C_BK, C_BK, C_BK, C_CY, C_BK, C_BK, C_CY, C_CY,
                           C_BK, C_BK, C_OR, C_BK, C_BK,      C_BK, C_BK, C_OR, C_BK, C_BK,
@@ -94,7 +115,7 @@ const uint8_t PROGMEM colors[][2][37][3] = {
 
 
     // function
-    [3] = LAYOUT_elora_color(
+    [5] = LAYOUT_elora_color(
         C_RD, C_BK, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_BK, C_RD,
         C_MG, C_BL, C_BL, C_BL, C_CY, C_BK,                              C_BK, C_CY, C_YW, C_MG, C_BK, C_BK,
         C_BL, C_BL, C_BL, C_BL, C_BL, C_BK,                              C_BK, C_CY, C_YW, C_MG, C_BK, C_BK,
@@ -104,7 +125,7 @@ const uint8_t PROGMEM colors[][2][37][3] = {
     ),
 
     // symbols
-    [4] = LAYOUT_elora_color(
+    [6] = LAYOUT_elora_color(
         C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,                              C_BK, C_BK, C_BK, C_BK, C_BK, C_BK,
         C_CY, C_WT, C_WT, C_WT, C_WT, C_WT,                              C_WT, C_WT, C_WT, C_WT, C_WT, C_YW,
         C_YW, C_RD, C_RD, C_YW, C_CY, C_YW,                              C_CY, C_CY, C_CY, C_CY, C_CY, C_YW,
@@ -114,28 +135,23 @@ const uint8_t PROGMEM colors[][2][37][3] = {
     ),
 
     // sway
-    [5] = LAYOUT_elora_color(
+    [7] = LAYOUT_elora_color(
         C_RD, C_WT, C_WT, C_WT, C_WT, C_WT,                              C_WT, C_WT, C_WT, C_WT, C_WT, C_BK,
         C_BK, C_GN, C_GN, C_GN, C_GN, C_GN,                              C_BK, C_BK, C_YW, C_GN, C_GN, C_OR,
         C_BL, C_GN, C_GN, C_GN, C_GN, C_GN,                              C_GN, C_YW, C_YW, C_YW, C_BK, C_BL,
         C_BL, C_GN, C_GN, C_GN, C_GN, C_GN, C_BK, C_BK,      C_BK, C_BK, C_GN, C_BK, C_BK, C_BK, C_BK, C_BL,
                           C_GN, C_BK, C_BK, C_MG, C_BK,      C_BK, C_MG, C_BK, C_BK, C_GN,
         C_GN, C_GN, C_GN, C_GN, C_GN, C_GN,                              C_GN, C_GN, C_GN, C_GN, C_GN, C_GN
-    ),
-
-    [6] = LAYOUT_elora_color(
-        C_BL, C_WT, C_WT, C_WT, C_WT, C_WT,                              C_WT, C_WT, C_WT, C_WT, C_WT, C_BK,
-        C_YW, C_MG, C_OR, C_YW, C_OR, C_MG,                              C_CY, C_CY, C_CY, C_CY, C_CY, C_BK,
-        C_BL, C_BL, C_YW, C_YW, C_YW, C_OR,                              C_CY, C_CY, C_CY, C_CY, C_BK, C_BK,
-        C_BL, C_CY, C_CY, C_CY, C_CY, C_CY, C_BK, C_MG,      C_BK, C_BK, C_CY, C_CY, C_BK, C_BK, C_BK, C_BK,
-                          C_BK, C_RD, C_GN, C_WT, C_BL,      C_BK, C_BK, C_BK, C_BK, C_RD,
-        C_BL, C_BL, C_BL, C_BL, C_BL, C_BL,                              C_BL, C_BL, C_BL, C_BL, C_BL, C_BL
     )
+
+
+
+
 
 };
 
 
-static void rgb_set_color_layout(uint8_t layer) {
+static void rgb_set_color_layout_deferred(uint8_t layer) {
 
     #define TOTAL_COLOR_LAYOUTS (sizeof(colors) / sizeof(colors[0]))
     if (layer >= TOTAL_COLOR_LAYOUTS) {
@@ -157,13 +173,22 @@ static void rgb_set_color_layout(uint8_t layer) {
             .v = colors[layer][side][col][2]
         };
         hsv_t adjusted_hsv = {
-            .h = (base_hsv.h + rgb_matrix_config.hsv.h) % 255, // Blend or adjust hue
-            .s = (base_hsv.s * rgb_matrix_config.hsv.s) / 255, // Modulate saturation
-            .v = (base_hsv.v * rgb_matrix_config.hsv.v) / 255  // Modulate brightness/value
+            .h = (base_hsv.h + rgb_matrix_config.hsv.h) % 255,
+            .s = (base_hsv.s * rgb_matrix_config.hsv.s) / 255,
+            .v = (base_hsv.v * rgb_matrix_config.hsv.v) / 255
         };
         rgb_t rgb = hsv_to_rgb(adjusted_hsv);
         rgb_matrix_set_color(col, rgb.r, rgb.g, rgb.b);
     }
+}
+
+static void rgb_set_color_layout(uint8_t layer) {
+    uint8_t side = is_keyboard_left() ? 0 : 1;
+    if (side == 1) {
+        defer_exec(300, (void (*)(void*))rgb_set_color_layout_deferred, (void*)(uintptr_t)layer);
+        return;
+    }
+    rgb_set_color_layout_deferred(layer);
 }
 
 bool layer_0_effect(effect_params_t* params) {
@@ -202,4 +227,9 @@ bool layer_6_effect(effect_params_t* params) {
     return rgb_matrix_check_finished_leds(led_max);
 }
 
+bool layer_7_effect(effect_params_t* params) {
+    RGB_MATRIX_USE_LIMITS(led_min, led_max);
+    rgb_set_color_layout(7);
+    return rgb_matrix_check_finished_leds(led_max);
+}
 #endif // RGB_MATRIX_CUSTOM_EFFECT_IMPLS
